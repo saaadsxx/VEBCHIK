@@ -22,8 +22,16 @@ const testDbConnection = async () => {
     try {
         await sequelize.authenticate();
         console.log('Успешное подключение к базе данных');
+        
+        // Синхронизация моделей
+        await sequelize.sync({ 
+            alter: true,
+            logging: console.log
+        });
+        console.log('Структура базы данных обновлена');
     } catch (error) {
-        console.error('Ошибка подключения к базе данных:', error.message);
+        console.error('Ошибка работы с базой данных:');
+        console.error(error.message);
         process.exit(1);
     }
 };
